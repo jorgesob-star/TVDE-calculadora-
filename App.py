@@ -29,7 +29,7 @@ if st.button("Calcular 🔹", use_container_width=True):
     desconto_pat = valor * (perc_pat / 100)
     valor -= desconto_pat
     st.markdown(f"<div style='background-color:#CCE5FF;padding:10px;border-radius:5px'>"
-                f"- {perc_pat}% Patrão: -{desconto_pat:.2f} → {valor:.2f}</div>", unsafe_allow_html=True)
+                f"- {perc_pat}% Empresa: -{desconto_pat:.2f} → {valor:.2f}</div>", unsafe_allow_html=True)
 
     # Seguro
     valor -= desc_seguro
