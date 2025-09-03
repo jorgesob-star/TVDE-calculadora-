@@ -7,11 +7,11 @@ st.markdown("Calcule rapidamente os descontos do Uber, Empresa, Seguro e Combust
 
 # Entradas
 st.subheader("Insira os valores:")
-valor_inicial = st.number_input("💰 Valor inicial", min_value=0.0, value=3000.0, step=10.0)
+valor_inicial = st.number_input("💰 Valor inicial", min_value=0.0, value=130.0, step=10.0)
 perc_uber = st.number_input("🚗 Percentagem Uber (%)", min_value=0.0, value=25.0, step=1.0)
 perc_pat = st.number_input("👔 Percentagem Empresa (%)", min_value=0.0, value=12.0, step=1.0)
-desc_seguro = st.number_input("🛡️  Seguro ", min_value=0.0, value=180.0, step=10.0)
-desc_combustivel = st.number_input("⛽ Combustível ", min_value=0.0, value=600.0, step=10.0)
+desc_seguro = st.number_input("🛡️  Seguro ", min_value=0.0, value=6.0, step=10.0)
+desc_combustivel = st.number_input("⛽ Combustível ", min_value=0.0, value=30.0, step=10.0)
 
 st.markdown("---")  # Separador
 
