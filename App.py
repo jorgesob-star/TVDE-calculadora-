@@ -3,7 +3,7 @@ import streamlit as st
 # Configuração da página
 st.set_page_config(page_title="Calculadora de Descontos", layout="centered")
 st.title("💸 Calculadora de Descontos")
-st.markdown("Calcule rapidamente os descontos do Uber, Patrão, Seguro e Combustível com visual intuitivo.")
+st.markdown("Calcule rapidamente os descontos do Uber, Empresa, Seguro e Combustível com visual intuitivo.")
 
 # Entradas
 st.subheader("Insira os valores:")
