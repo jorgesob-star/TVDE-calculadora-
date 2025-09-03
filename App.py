@@ -25,7 +25,7 @@ if st.button("Calcular 🔹", use_container_width=True):
     st.markdown(f"<div style='background-color:#FFCCCC;padding:10px;border-radius:5px'>"
                 f"- {perc_uber}% Uber: -{desconto_uber:.2f} → {valor:.2f}</div>", unsafe_allow_html=True)
 
-    # Patrão
+    # Empresa 
     desconto_pat = valor * (perc_pat / 100)
     valor -= desconto_pat
     st.markdown(f"<div style='background-color:#CCE5FF;padding:10px;border-radius:5px'>"
