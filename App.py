@@ -103,24 +103,28 @@ if st.button("Calcular 🔍", type="primary", use_container_width=True):
         with col1:
             st.markdown("#### 🏢 Opção Alugado")
             st.write(f"""
-            - Apuro Bruto: {apuro:,.2f} €
-            - Desconto da Empresa ({opcoes['perc_aluguer']}%): {desconto_empresa_alugado:,.2f} €
-            - Custo do Aluguer: {custos_fixos_alugado:,.2f} €
-            - Combustível: {desconto_combustivel:,.2f} €
-            - **Total de Descontos: {desconto_empresa_alugado + custos_fixos_alugado + desconto_combustivel:,.2f} €**
-            - **Sobra Final: {sobra_opcao1:,.2f} €**
+            - **Apuro Bruto:** {apuro:,.2f} €
+            - Desconto da Empresa ({opcoes['perc_aluguer']}%): -{desconto_empresa_alugado:,.2f} €
+            - Custo do Aluguer: -{custos_fixos_alugado:,.2f} €
+            - Combustível: -{desconto_combustivel:,.2f} €
+            ---
+            - **Sobra Final:** {sobra_opcao1:,.2f} €
             - Ganho por Hora: {ganho_hora_opcao1:,.2f} €/h
             """)
         
         with col2:
             st.markdown("#### 🚗 Opção Próprio")
             st.write(f"""
-            - Apuro Bruto: {apuro:,.2f} €
-            - Desconto da Empresa ({opcoes['perc_seguro']}%): {desconto_empresa_proprio:,.2f} €
-            - Custo do Seguro: {opcoes['seguro']:,.2f} €
-            - Custo de Manutenção: {opcoes['manutencao']:,.2f} €
-            - Combustível: {desconto_combustivel:,.2f} €
-            - **Total de Descontos: {desconto_empresa_proprio + custos_fixos_proprio + desconto_combustivel:,.2f} €**
-            - **Sobra Final: {sobra_opcao2:,.2f} €**
+            - **Apuro Bruto:** {apuro:,.2f} €
+            - Desconto da Empresa ({opcoes['perc_seguro']}%): -{desconto_empresa_proprio:,.2f} €
+            - Custo do Seguro: -{opcoes['seguro']:,.2f} €
+            - Custo de Manutenção: -{opcoes['manutencao']:,.2f} €
+            - Combustível: -{desconto_combustivel:,.2f} €
+            ---
+            - **Sobra Final:** {sobra_opcao2:,.2f} €
             - Ganho por Hora: {ganho_hora_opcao2:,.2f} €/h
             """)
+
+# --- Rodapé ---
+st.markdown("---")
+st.caption("© 2025 Comparador de Descontos - Desenvolvido para auxiliar na análise financeira de opções de veículo")
