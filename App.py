@@ -35,15 +35,27 @@ with st.sidebar:
     3. Clique em 'Calcular' para ver os resultados
     """)
 
-# --- Entradas principais ---
+# --- Entradas principais com session_state ---
 st.header("📋 Entradas do Usuário")
 col1, col2, col3 = st.columns(3)
+
 with col1:
-    apuro = st.number_input("💰 Apuro total (€)", min_value=0.0, value=700.0, step=10.0)
+    if 'apuro' not in st.session_state:
+        st.session_state.apuro = 700.0
+    apuro = st.number_input("💰 Apuro total (€)", min_value=0.0, value=st.session_state.apuro, step=10.0)
+    st.session_state.apuro = apuro
+
 with col2:
-    desc_combustivel = st.number_input("⛽ Desconto de Combustível (€)", min_value=0.0, value=200.0, step=1.0)
+    if 'desc_combustivel' not in st.session_state:
+        st.session_state.desc_combustivel = 200.0
+    desc_combustivel = st.number_input("⛽ Desconto de Combustível (€)", min_value=0.0, value=st.session_state.desc_combustivel, step=1.0)
+    st.session_state.desc_combustivel = desc_combustivel
+
 with col3:
-    horas_trabalho = st.number_input("⏱️ Horas trabalhadas", min_value=1.0, value=40.0, step=1.0)
+    if 'horas_trabalho' not in st.session_state:
+        st.session_state.horas_trabalho = 40.0
+    horas_trabalho = st.number_input("⏱️ Horas trabalhadas", min_value=1.0, value=st.session_state.horas_trabalho, step=1.0)
+    st.session_state.horas_trabalho = horas_trabalho
 
 st.markdown("---")
 
@@ -91,25 +103,24 @@ def barra_horizontal(valor, label, cor, max_valor, formato="€"):
 
 # --- Cálculo e Visualização ---
 if st.button("Calcular 🔍", type="primary", use_container_width=True):
-    # Preparar dados
     opcoes = {k: st.session_state[k] for k in ['aluguer', 'perc_aluguer', 'seguro', 'perc_seguro', 'manutencao']}
-    
+
     # Descontos
     desconto_empresa_alugado = apuro * opcoes['perc_aluguer'] / 100
     desconto_empresa_proprio = apuro * opcoes['perc_seguro'] / 100
-    
+
     # Custos fixos
     custos_fixos_alugado = opcoes['aluguer']
     custos_fixos_proprio = opcoes['seguro'] + opcoes['manutencao']
-    
+
     # Sobra final
     sobra_opcao1 = apuro - desconto_empresa_alugado - custos_fixos_alugado - desc_combustivel
     sobra_opcao2 = apuro - desconto_empresa_proprio - custos_fixos_proprio - desc_combustivel
-    
+
     # Ganho por hora
     ganho_hora_opcao1 = sobra_opcao1 / max(horas_trabalho, 1)
     ganho_hora_opcao2 = sobra_opcao2 / max(horas_trabalho, 1)
-    
+
     # Melhor opção
     if sobra_opcao1 > sobra_opcao2:
         melhor_idx = 0
@@ -126,7 +137,6 @@ if st.button("Calcular 🔍", type="primary", use_container_width=True):
 
     # --- Resultados ---
     st.subheader("📊 Resultados")
-    
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Apuro Bruto", f"{apuro:,.2f} €")
@@ -135,10 +145,9 @@ if st.button("Calcular 🔍", type="primary", use_container_width=True):
     with col3:
         if melhor_idx != -1:
             st.metric("Diferença", f"{diferenca:,.2f} €", f"{percentual_diferenca:+.1f}%")
-    
+
     st.markdown("---")
 
-    # --- Abas ---
     tab1, tab2 = st.tabs(["📈 Dashboard Visual", "🧮 Detalhes dos Cálculos"])
     
     with tab1:
@@ -150,11 +159,10 @@ if st.button("Calcular 🔍", type="primary", use_container_width=True):
             st.write("**Sobra Final (€)**")
             barra_horizontal(sobra_opcao1, f"Alugado {'🏆' if melhor_idx==0 else ''}", '#4caf50' if melhor_idx==0 else '#a5d6a7', max_sobra)
             barra_horizontal(sobra_opcao2, f"Próprio {'🏆' if melhor_idx==1 else ''}", '#2196f3' if melhor_idx==1 else '#90caf9', max_sobra)
-            
             st.write("**Ganho por Hora (€/h)**")
             barra_horizontal(ganho_hora_opcao1, f"Alugado {'🏆' if melhor_idx==0 else ''}", '#4caf50' if melhor_idx==0 else '#a5d6a7', max_ganho, "€/h")
             barra_horizontal(ganho_hora_opcao2, f"Próprio {'🏆' if melhor_idx==1 else ''}", '#2196f3' if melhor_idx==1 else '#90caf9', max_ganho, "€/h")
-        
+
         st.markdown("---")
         if melhor_idx == 0:
             st.success(f"**🎉 Recomendação: Opção Alugado**\n- Diferença: {diferenca:,.2f} €\n- Ganho/h: {ganho_hora_opcao1:,.2f} €/h")
@@ -162,7 +170,7 @@ if st.button("Calcular 🔍", type="primary", use_container_width=True):
             st.success(f"**🎉 Recomendação: Opção Próprio**\n- Diferença: {diferenca:,.2f} €\n- Ganho/h: {ganho_hora_opcao2:,.2f} €/h")
         else:
             st.info("ℹ️ Ambas as opções resultam no mesmo valor financeiro.")
-    
+
     with tab2:
         st.write("### Detalhamento dos Cálculos")
         col1, col2 = st.columns(2)
@@ -188,3 +196,8 @@ if st.button("Calcular 🔍", type="primary", use_container_width=True):
             ---
             - **Sobra Final:** {sobra_opcao2:,.2f} €
             - Ganho por Hora: {ganho_hora_opcao2:,.2f} €/h
+            """)
+
+# --- Rodapé ---
+st.markdown("---")
+st.caption("© 2025 Comparador de Descontos - Desenvolvido para auxiliar na análise financeira de opções de veículo")
