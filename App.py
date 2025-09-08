@@ -127,7 +127,7 @@ col2.metric("Ganho Líquido Diário", f"€{ganho_liquido_diario:.2f}")
 
 # Projeção mensal
 st.header("📈 Projeção Mensal")
-dias_uteis_mes = st.slider("Dias úteis no mês", 20, 31, 22)
+dias_uteis_mes = st.slider("Dias úteis no mês", 20, 31, 25)
 semanas_mes = dias_uteis_mes / dias_trabalhados
 ganhos_mensais = ganhos_liquidos_semana * semanas_mes
 
