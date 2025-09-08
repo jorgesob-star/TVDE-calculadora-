@@ -48,13 +48,13 @@ if st.session_state.show_advanced:
 st.header("Entradas Semanais")
 
 # Valores iniciais conforme solicitado
-apuro_semanal = 700.0
-combustivel_semanal = 150.0
+apuro_semanal = 1000.0
+combustivel_semanal = 250.0
 
 col1, col2 = st.columns(2)
 
 with col1:
-    dias_trabalhados = st.slider("Dias trabalhados na semana", 1, 7, 5)
+    dias_trabalhados = st.slider("Dias trabalhados na semana", 1, 7, 7)
     ganhos_brutos_semana = st.number_input(
         "Ganhos Brutos Semanais (€)", 
         min_value=0.0, 
@@ -93,27 +93,6 @@ col1, col2, col3 = st.columns(3)
 col1.metric("Ganhos Líquidos Semanais", f"€{ganhos_liquidos_semana:.2f}")
 col2.metric("Comissão Plataforma", f"€{comissao_valor_semana:.2f}")
 col3.metric("Margem de Lucro", f"{margem_lucro:.1f}%")
-
-# Visualização simplificada
-st.subheader("Distribuição dos Custos e Ganhos")
-
-# Criar visualização usando barras nativas do Streamlit
-categorias = ['Ganhos Líquidos', 'Comissão', 'Gasolina', 'Aluguer', 'Outros']
-valores = [
-    max(ganhos_liquidos_semana, 0), 
-    comissao_valor_semana, 
-    custo_gasolina_semana, 
-    st.session_state.aluguer_semanal, 
-    outros_custos
-]
-
-data = {
-    "Categoria": categorias,
-    "Valor (€)": valores,
-    "Tipo": ["Ganho", "Custo", "Custo", "Custo", "Custo"]
-}
-
-st.bar_chart(data, x="Categoria", y="Valor (€)", color="Tipo")
 
 # Tabela de detalhamento
 st.subheader("📊 Detalhamento dos Custos")
